@@ -1,24 +1,28 @@
 import os
 
 
-def display_codes():
-    """Displays the contents of codes.csv in a fixed width, two column format"""
+def get_customer_codes() -> dict[str: str]:
+    """Returns a dictionary mapping names to codes"""
     with open('codes.csv', 'r') as file:
         lines = file.readlines()
 
-    codes = []
+    codes = {}
     for line in lines:
-        codes.append(line.strip('\n').replace('"', '').split(','))
-    if len(codes) % 2 == 1:
-        codes.append(['', ''])
+        name, code = line.strip('\n').replace('"', '').split(',')
+        codes[name] = code
 
-    for i in range(0, len(codes), 2):
-        print(f'{codes[i][0]:<9}{codes[i][1]:<8}\t{codes[i+1][0]:<9}{codes[i+1][1]:<8}')
     return codes
 
 
 def main():
-    display_codes()
+    codes = get_customer_codes()
+
+    # display customer codes
+    for i, name in enumerate(codes):
+        print(f'{name:<9}{codes[name]:<8}', end='')
+        # add a new line every second customer code
+        if i % 2 != 0:
+            print()
 
 
 if __name__ == '__main__':

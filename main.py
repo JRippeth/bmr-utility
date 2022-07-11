@@ -15,14 +15,24 @@ def get_customer_codes() -> dict[str: str]:
 
 
 def main():
-    codes = get_customer_codes()
+    customers = get_customer_codes()
 
     # display customer codes
-    for i, name in enumerate(codes):
-        print(f'{name:<9}{codes[name]:<8}', end='')
+    for i, name in enumerate(customers):
+        print(f'{name:<9}{customers[name]:<8}', end='')
         # add a new line every second customer code
         if i % 2 != 0:
             print()
+
+    # validate customer name
+    name = input('\n\nEnter the customer name: ')
+    while name not in customers.keys():
+        name = input('Invalid name - Please re-enter: ').upper()
+
+    # validate order prefix
+    prefix = input('(C)ancel or (B)ackorder: ').upper()
+    while prefix not in ['C', 'B']:
+        prefix = input('Invalid order type - Please re-enter: ').upper()
 
 
 if __name__ == '__main__':
